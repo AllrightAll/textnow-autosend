@@ -37,3 +37,9 @@ jobs:
             done
           }
           eval main $(sed 's/^/"/g;s/$/"/g;s/|+|/" "/g'<<<${TEXTNOW_COOKIES})
+
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          retain_days: 2
+          keep_minimum_runs: 6
