@@ -12,6 +12,7 @@
     * TEXTNOW_PASSWORD
     * TEXTNOW_RECIPIENT
     * TEXTNOW_MESSAGE
+    * TEXTNOW_COOKIES
 3.  Change actions permissions to allow all actions
 4.  Done, it will every hour trigger autosend action
 
