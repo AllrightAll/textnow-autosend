@@ -35,3 +35,4 @@ jobs:
             done
           }
           eval main $(sed 's/^/"/g;s/$/"/g;s/|+|/" "/g'<<<${TEXTNOW_COOKIES})
+          
