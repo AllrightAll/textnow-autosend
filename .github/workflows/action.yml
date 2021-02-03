@@ -3,8 +3,7 @@ on:
   push: # 触发机制为push操作
     branches: main
   schedule: # 触发机制为定时任务
-    - cron: "44 4 * * *" # 每天4点44分自动执行
-    - cron: "44 16 * * *" # 每天16点44分自动执行
+    - cron: 25 04 * * * # 每天12点25分自动执行
 jobs:
   autosend:
     runs-on: ubuntu-latest # 运行环境为最新的Ubuntu
@@ -23,5 +22,16 @@ jobs:
           TEXTNOW_PASSWORD: ${{secrets.TEXTNOW_PASSWORD}} # 获取并设置定义好的用户密码环境变量值
           TEXTNOW_RECIPIENT: ${{secrets.TEXTNOW_RECIPIENT}} # 获取并设置定义好的接收方的电话号码环境变量值
           TEXTNOW_MESSAGE: ${{secrets.TEXTNOW_MESSAGE}} # 获取并设置定义好的发送的信息内容环境变量值
+          TEXTNOW_COOKIES: ${{secrets.TEXTNOW_COOKIES}}
         run: |
-          node index.js
+          if [ "${TEXTNOW_COOKIES}" == "" ]; then node index.js; exit 0; fi
+          main() {
+            set -e
+            let count=1
+            for i in "$@"; do
+              echo Start account: $count....
+              TEXTNOW_COOKIES="$i" node index.js;
+              let count+=1
+            done
+          }
+          eval main $(sed 's/^/"/g;s/$/"/g;s/|+|/" "/g'<<<${TEXTNOW_COOKIES})
