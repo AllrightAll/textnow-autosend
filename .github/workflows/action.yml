@@ -4,6 +4,8 @@ on:
     branches: main
   schedule: # 触发机制为定时任务
     - cron: 25 04 * * * # 每天12点25分自动执行
+  workflow_dispatch:
+    inputs:
 jobs:
   autosend:
     runs-on: ubuntu-latest # 运行环境为最新的Ubuntu
@@ -35,4 +37,3 @@ jobs:
             done
           }
           eval main $(sed 's/^/"/g;s/$/"/g;s/|+|/" "/g'<<<${TEXTNOW_COOKIES})
-          
