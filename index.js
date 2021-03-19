@@ -5,9 +5,10 @@
   const puppeteer = require("puppeteer");
   const textNowHelper = require("./utils/helper");
   const config = require("./config");
+  const crypto = require('crypto');
   const {
-    username,
-    password,
+    // username,
+    // password,
     recipient,
     message,
     cookies_str,
@@ -15,6 +16,7 @@
 
   let browser = null;
   let page = null;
+  const md5 = crypto.createHash('md5').update(cookies_str).digest('hex');
 
   try {
     browser = await puppeteer.launch({ 
@@ -28,7 +30,7 @@
     try {
       console.log("Importing existing cookies...");
       const cookiesJSON = await fs.readFile(
-        path.resolve(__dirname, ".cahce/cookies.json")
+        path.resolve(__dirname, ".cache/" + md5 + "_cookies.json")
       );
       cookies = JSON.parse(cookiesJSON);
     } catch (error) {
@@ -43,15 +45,16 @@
       cookies = await textNowHelper.logIn(page, client);
     } catch (error) {
       console.log("Failed to log in with existing cookies.");
-      console.log("Logging in with account credentials...");
-      cookies = await textNowHelper.logIn(page, client, username, password);
+      // console.log("Logging in with account credentials...");
+      // cookies = await textNowHelper.logIn(page, client, username, password);
+      process.exit(1);
     }
 
     try {
       console.log("Successfully logged into TextNow!");
       // Save cookies to file
       await fs.writeFile(
-        path.resolve(__dirname, ".cache/cookies.json"),
+        path.resolve(__dirname, ".cache/" + md5 + "_cookies.json"),
         JSON.stringify(cookies)
       );
     } catch (error) {
@@ -90,3 +93,4 @@ function parseCookies(cookies_str, domain) {
         return { name, value, domain };
     });
 };
+

@@ -8,11 +8,12 @@
 
 1.  Fork repository
 2.  Setting repository secrets for autosend parameters
-    * TEXTNOW_USERNAME
-    * TEXTNOW_PASSWORD
-    * TEXTNOW_RECIPIENT
-    * TEXTNOW_MESSAGE
-    * TEXTNOW_COOKIES
+    * ~~`TEXTNOW_USERNAME`~~
+    * ~~`TEXTNOW_PASSWORD`~~
+    * `TEXTNOW_RECIPIENT`
+    * `TEXTNOW_MESSAGE`
+    * `TEXTNOW_COOKIES` multi account `cookies_str1|+|cookies_str2`
+    * `CACHE_NAME` save cookies use `actions/cache@v2`
 3.  Change actions permissions to allow all actions
 4.  Done, it will every hour trigger autosend action
 
