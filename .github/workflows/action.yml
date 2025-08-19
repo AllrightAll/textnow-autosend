@@ -20,7 +20,7 @@ jobs:
           node-version: "12.x" # 使用node 12版本作为运行环境
 
       - name: Cache cookies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/cache.tgz
           key: ${{ secrets.CACHE_NAME }}-${{ github.run_id }} # CACHE_NAME 缓存名字，防止泄漏，自行设置
